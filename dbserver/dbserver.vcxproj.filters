@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\codes\dbserver.cpp" />
+    <ClCompile Include="..\codes\MysqlConnector.cpp">
+      <Filter>app</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codes\AppManager.cpp">
+      <Filter>app</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="app">
+      <UniqueIdentifier>{4ff29811-ce87-4160-8298-4209f686d3b2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\codes\AppManager.h">
+      <Filter>app</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codes\MysqlConnector.h">
+      <Filter>app</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
