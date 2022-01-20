@@ -2,6 +2,9 @@
 #include <map>
 #include <string>
 #define USER_MAX_MEMBER 20
+#define CMD_1000 1000
+#define CMD_2000 2000
+#define CMD_3000 3000
 
 namespace app
 {

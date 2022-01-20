@@ -2,31 +2,34 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="..\codes\dbserver.cpp" />
-    <ClCompile Include="..\codes\MysqlConnector.cpp">
-      <Filter>app</Filter>
-    </ClCompile>
     <ClCompile Include="..\codes\AppManager.cpp">
-      <Filter>app</Filter>
-    </ClCompile>
-    <ClCompile Include="..\codes\DBBuffer.cpp">
-      <Filter>app</Filter>
-    </ClCompile>
-    <ClCompile Include="..\codes\DBConnector.cpp">
-      <Filter>app</Filter>
-    </ClCompile>
-    <ClCompile Include="..\codes\DBManager.cpp">
-      <Filter>app</Filter>
-    </ClCompile>
-    <ClCompile Include="..\codes\DBManager_Read.cpp">
-      <Filter>app</Filter>
-    </ClCompile>
-    <ClCompile Include="..\codes\DBManager_Write.cpp">
       <Filter>app</Filter>
     </ClCompile>
     <ClCompile Include="..\codes\UserData.cpp">
       <Filter>app</Filter>
     </ClCompile>
+    <ClCompile Include="..\codes\DBBuffer.cpp">
+      <Filter>mysql</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codes\DBConnector.cpp">
+      <Filter>mysql</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codes\DBManager.cpp">
+      <Filter>mysql</Filter>
+    </ClCompile>
     <ClCompile Include="..\codes\DBManager_Account.cpp">
+      <Filter>mysql</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codes\DBManager_Read.cpp">
+      <Filter>mysql</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codes\DBManager_Write.cpp">
+      <Filter>mysql</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codes\MysqlConnector.cpp">
+      <Filter>mysql</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codes\AppLogin.cpp">
       <Filter>app</Filter>
     </ClCompile>
   </ItemGroup>
@@ -34,27 +37,33 @@
     <Filter Include="app">
       <UniqueIdentifier>{4ff29811-ce87-4160-8298-4209f686d3b2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="mysql">
+      <UniqueIdentifier>{a7de23cd-aa18-473d-8e54-3b3faaa78f28}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\codes\AppManager.h">
       <Filter>app</Filter>
     </ClInclude>
-    <ClInclude Include="..\codes\MysqlConnector.h">
+    <ClInclude Include="..\codes\UserData.h">
       <Filter>app</Filter>
     </ClInclude>
     <ClInclude Include="..\codes\DBBuffer.h">
-      <Filter>app</Filter>
-    </ClInclude>
-    <ClInclude Include="..\codes\ThreadSafeQueue.h">
-      <Filter>app</Filter>
+      <Filter>mysql</Filter>
     </ClInclude>
     <ClInclude Include="..\codes\DBConnector.h">
-      <Filter>app</Filter>
+      <Filter>mysql</Filter>
     </ClInclude>
     <ClInclude Include="..\codes\DBManager.h">
-      <Filter>app</Filter>
+      <Filter>mysql</Filter>
     </ClInclude>
-    <ClInclude Include="..\codes\UserData.h">
+    <ClInclude Include="..\codes\MysqlConnector.h">
+      <Filter>mysql</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codes\ThreadSafeQueue.h">
+      <Filter>mysql</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codes\AppLogin.h">
       <Filter>app</Filter>
     </ClInclude>
   </ItemGroup>

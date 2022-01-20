@@ -1,5 +1,9 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(499,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+  AppLogin.cpp
+F:\Learn\dbserver\codes\AppLogin.cpp(21,28): warning C4244: '=': conversion from 'time_t' to 'int', possible loss of data
+  AppManager.cpp
   DBManager.cpp
   DBManager_Account.cpp
+F:\Learn\dbserver\codes\DBManager_Account.cpp(56,16): warning C4244: 'initializing': conversion from 'time_t' to 'int', possible loss of data
   Generating Code...
   dbserver.vcxproj -> F:\Learn\dbserver\exe\dbserver.exe

@@ -1,7 +1,7 @@
 #include "AppManager.h"
 
 #include "DBManager.h"
-
+#include "AppLogin.h"
 
 #include <iostream>
 #include <fstream>
@@ -63,6 +63,7 @@ namespace app
 	/*-------------------------------------------------*/
 	void update()
 	{
+		if(__DBManager == NULL) return;
 		__DBManager->update();
 	}
 
@@ -75,6 +76,8 @@ namespace app
 	{
 		__DBManager = new DBManager();
 		__DBManager->InitDB();
+		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+		app::onLogin_1000();
 		while (true)
 		{
 			update();

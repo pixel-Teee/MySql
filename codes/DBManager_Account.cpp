@@ -46,9 +46,49 @@ namespace db
 			printf("%d-%d %s-%s %d-%d\n", mem->ID, mem->state, mem->name, mem->password, mem->timeCreate, mem->timeLastLogin);
 		}
 	}
+
+	//更新登录时间
+	void updateLoginTime(DBBuffer* buff, DBConnector* db)
+	{
+		int memid;
+		buff->r(memid);
+
+		int currtime = time(NULL);
+
+		stringstream sql;
+		sql << "update user_account set logintime = " << 
+		currtime << " where id = " << memid << ";";
+
+		auto mysql = db->GetMysqlConnector();
+		int ret = mysql->ExecQuery(sql.str());
+
+		if (ret != 0)
+		{
+			printf("mysql 1000 :%s %d line:%d\n", mysql->GetErrorStr(), ret, __LINE__);
+			return;
+		}
+
+		printf("mysql update logintime successfully...\n");
+
+		//从工作线程推送数据到主线程
+		auto buf2 = __DBManager->PopPool();
+		buf2->b(CMD_1000);
+		buf2->s(memid);
+		buf2->e();
+		__DBManager->PushToMainThread(buf2);
+	}
 	
+	//账号数据库所在工作线程的回调函数
 	void DBManager::Thread_UserAccount(DBBuffer* buff)
 	{
-
+		uint16_t cmd;
+		buff->init_r();
+		buff->r(cmd);
+		switch (cmd)
+		{
+		case CMD_1000://更新登录时间
+			updateLoginTime(buff, DBAccount);
+			break;
+		}
 	}
 }

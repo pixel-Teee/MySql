@@ -1,4 +1,5 @@
 #include "DBManager.h"
+#include "AppLogin.h"
 
 namespace db
 {
@@ -92,7 +93,7 @@ namespace db
 
 		auto writefun = std::bind(&DBManager::Thread_UserWrite, this, std::placeholders::_1);
 
-		auto accountfun = std::bind(&DBManager::Thread_UserWrite, this, std::placeholders::_1);
+		auto accountfun = std::bind(&DBManager::Thread_UserAccount, this, std::placeholders::_1);
 
 		auto begin_account = std::bind(&DBManager::Thread_BeginAccount, this);
 
@@ -136,8 +137,10 @@ namespace db
 			DBBuffer* buff = nullptr;
 			__logicBuffs.try_pop(buff);
 			if(buff == nullptr)break;
-
+			
 			//调用给逻辑单元
+			app::OnDBCommand(buff);
+
 			//使用完毕，加入回收池
 			__poolBuffs.Push(buff);
 		}

@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\codes\AppLogin.cpp" />
     <ClCompile Include="..\codes\AppManager.cpp" />
     <ClCompile Include="..\codes\DBBuffer.cpp" />
     <ClCompile Include="..\codes\DBConnector.cpp" />
@@ -157,6 +158,7 @@
     <ClCompile Include="..\codes\UserData.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\codes\AppLogin.h" />
     <ClInclude Include="..\codes\AppManager.h" />
     <ClInclude Include="..\codes\DBBuffer.h" />
     <ClInclude Include="..\codes\DBConnector.h" />

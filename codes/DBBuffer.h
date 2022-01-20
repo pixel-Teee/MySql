@@ -78,6 +78,7 @@ namespace db
 		void s(void* v, const int len);
 
 		//---½âÎö»º³åÇø---
+		inline void init_r() { m_ReceE = 0; }
 		void r(int8_t& v);
 		void r(uint8_t& v);
 		void r(int16_t& v);
