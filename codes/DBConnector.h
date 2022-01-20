@@ -56,7 +56,7 @@ namespace db
 		std::queue<DBBuffer*> m_SwapQueue;//交换数据队列
 		std::condition_variable m_ConditionVar;//条件变量
 
-		ThreadSafePool m_BuffsPool;//内存回收池
+		ThreadSafePool m_BuffsPool;//内存回收池，工作线程中用来回收的
 		atomic<int> m_WorkCount;//当前工作数量，队列中的数据数量
 	public:
 		//线程ID，两个回调

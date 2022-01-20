@@ -27,7 +27,7 @@ namespace db
 		m_CallBack = fun;
 		m_BeginBack = bfun;
 		//开辟数据，1024个buffer，每个1K
-		m_BuffsPool.Init(1024, 1024);
+		m_BuffsPool.Init(500, 1024 * 32);
 
 		//3.连接mysql
 		bool isok = mysql->ConnectMysql(m_config->ip, m_config->username, m_config->userpass, m_config->dbname,  m_config->port);
