@@ -70,7 +70,7 @@ namespace db
 		void e();
 		void s(const int8_t v);
 		void s(const uint8_t v);
-		void s(const uint16_t v);
+		void s(const int16_t v);
 		void s(const uint16_t v);
 		void s(const int v);
 		void s(const int64_t v);

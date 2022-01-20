@@ -61,6 +61,8 @@ namespace db
 	public:
 		//线程ID，两个回调
 		int StartRun(int id, Callback fun, Callback bfun = nullptr);
+		void PushToWorkThread(DBBuffer* buffer);
+		DBBuffer* PopBuffer();
 		
 		inline MysqlConnector* GetMysqlConnector(){ return mysql; }
 		inline int GetThreadID(){ return m_ThreadID; }

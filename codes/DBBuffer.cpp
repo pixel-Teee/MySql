@@ -36,6 +36,17 @@ namespace db
 		}
 	}
 
+	void DBBuffer::s(const int16_t v)
+	{
+		if (m_SendE + 2 < m_CurLength)
+		{
+			char* p = (char*)&v;
+			for (int i = 0; i < 2; ++i)
+				m_Buf[m_SendE + i] = p[i];
+			m_SendE += 2;
+		}
+	}
+
 	void DBBuffer::s(const uint16_t v)
 	{
 		if (m_SendE + 2 < m_CurLength)

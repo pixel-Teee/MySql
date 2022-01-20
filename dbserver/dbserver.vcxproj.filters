@@ -8,6 +8,12 @@
     <ClCompile Include="..\codes\AppManager.cpp">
       <Filter>app</Filter>
     </ClCompile>
+    <ClCompile Include="..\codes\DBBuffer.cpp">
+      <Filter>app</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codes\DBConnector.cpp">
+      <Filter>app</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="app">
@@ -19,6 +25,15 @@
       <Filter>app</Filter>
     </ClInclude>
     <ClInclude Include="..\codes\MysqlConnector.h">
+      <Filter>app</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codes\DBBuffer.h">
+      <Filter>app</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codes\ThreadSafeQueue.h">
+      <Filter>app</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codes\DBConnector.h">
       <Filter>app</Filter>
     </ClInclude>
   </ItemGroup>

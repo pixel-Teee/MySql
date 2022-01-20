@@ -47,6 +47,30 @@ namespace db
 		return 0;
 	}
 
+	//主线程推送数据到工作线程
+	//主线程有读写查询请求的时候，需要推送数据到工作线程
+	void DBConnector::PushToWorkThread(DBBuffer* buff)
+	{
+		if(buff == nullptr) return;
+
+		std::unique_lock<std::mutex> lock(m_Mutex);
+
+		bool isnotify = m_Queue.empty();
+		m_Queue.push(buff);
+		lock.unlock();
+
+		++m_WorkCount;
+		if(isnotify) m_ConditionVar.notify_one();
+	}
+
+	DBBuffer* DBConnector::PopBuffer()
+	{
+		auto buff = m_BuffsPool.Pop();
+		buff->Clear();
+		buff->SetDB(this);
+		return buff;
+	}
+
 	//工作线程
 	void DBConnector::Run()
 	{
@@ -76,7 +100,7 @@ namespace db
 				/*使用回调处理数据*/
 				m_CallBack(buff);
 				--m_WorkCount;
-				if(buff != nullptr) m_BuffsPool.Push(buff);
+				m_BuffsPool.Push(buff);
 			}
 		}
 
