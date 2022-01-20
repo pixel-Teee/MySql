@@ -59,6 +59,7 @@ namespace db
 		void r(const char* key, uint32_t& value);
 		void r(const char* key, int32_t& value);
 		void r(const char* key, int64_t& value);
+		void r(const char* key, char* value);
 		void r(const char* key, std::string& value);
 	private:
 		MYSQL* mysql;

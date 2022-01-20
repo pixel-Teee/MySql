@@ -305,4 +305,13 @@ namespace db
 		}
 	}
 
+	void MysqlConnector::r(const char* key, char* value)
+	{
+		auto it = m_FieldsValue.find(key);
+		if (it != m_FieldsValue.end())
+		{
+			strcpy(value, it->second.data());
+		}
+	}
+
 }

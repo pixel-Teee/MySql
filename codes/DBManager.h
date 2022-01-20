@@ -26,6 +26,8 @@ namespace db
 		DBBuffer* PopPool();
 
 		void InitDB();
+		void update();
+		void PushToMainThread(DBBuffer* buffer);
 
 		void Thread_BeginAccount();
 		void Thread_UserRead(DBBuffer* buff);

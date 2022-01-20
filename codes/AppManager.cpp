@@ -1,7 +1,7 @@
 #include "AppManager.h"
 
-#include "MysqlConnector.h"
-#include <thread>
+#include "DBManager.h"
+
 
 #include <iostream>
 #include <fstream>
@@ -58,12 +58,26 @@ namespace app
 		}
 		
 	}
+	/*-------------------------------------------------*/
+	/*-------------------------------------------------*/
+	/*-------------------------------------------------*/
+	void update()
+	{
+		__DBManager->update();
+	}
+
+	void Init()
+	{
+
+	}
 
 	int app::run()
 	{
-		initMysql();
+		__DBManager = new DBManager();
+		__DBManager->InitDB();
 		while (true)
 		{
+			update();
 			//100∫¡√Î
 			std::this_thread::sleep_for(std::chrono::milliseconds(100));
 		}
