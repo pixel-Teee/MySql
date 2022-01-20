@@ -1,6 +1,6 @@
-.exe/
+exe/
 .vs/
-.compiles/
+compiles/
 
 *.obj
 *.user
