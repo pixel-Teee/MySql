@@ -76,8 +76,11 @@ namespace app
 	{
 		__DBManager = new DBManager();
 		__DBManager->InitDB();
+
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 		app::onLogin_1000();
+		app::onRegister_2000();
+		app::on_3000();
 		while (true)
 		{
 			update();

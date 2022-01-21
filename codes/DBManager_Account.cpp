@@ -77,6 +77,49 @@ namespace db
 		buf2->e();
 		__DBManager->PushToMainThread(buf2);
 	}
+
+	//注册账号
+	void regAccount(DBBuffer* buff, DBConnector* db)
+	{
+		int len1;
+		int len2;
+		char account[100];
+		char password[100];
+		memset(account, 0, 100);
+		memset(password, 0, 100);
+
+		buff->r(len1);
+		buff->r(account, len1);
+		buff->r(len2);
+		buff->r(password, len2);
+
+		int createtime = time(NULL);
+		stringstream sql;
+		sql << "insert user_account(username, password, createtime, logintime) values("
+		<< "'" << account << "','" << password << "'," << createtime << "," << createtime << ");";
+
+		auto mysql = db->GetMysqlConnector();
+		int ret = mysql->ExecQuery(sql.str());
+		if (ret)
+		{
+			printf("mysql 2000 err:%s %d line:%d\n", mysql->GetErrorStr(), ret, __LINE__);
+			return;
+		}
+
+		printf("mysql 2000 successfully...\n");
+
+		/*----mysql插入的ID----*/
+		int memid = mysql->GetMysql()->insert_id;
+
+		//从工作线程推送数据到主线程
+		auto buf2 = __DBManager->PopPool();
+		buf2->b(CMD_2000);
+		buf2->s(memid);
+		buf2->s(account, 100);
+		buf2->s(password, 100);
+		buf2->e();
+		__DBManager->PushToMainThread(buf2);
+	}
 	
 	//账号数据库所在工作线程的回调函数
 	void DBManager::Thread_UserAccount(DBBuffer* buff)
@@ -88,6 +131,9 @@ namespace db
 		{
 		case CMD_1000://更新登录时间
 			updateLoginTime(buff, DBAccount);
+			break;
+		case CMD_2000://注册登录
+			regAccount(buff, DBAccount);
 			break;
 		}
 	}
