@@ -289,11 +289,13 @@ namespace db
 
 	void MysqlConnector::r(const char* key, int64_t& value)
 	{
+		/*
 		auto it = m_FieldsValue.find(key);
 		if (it != m_FieldsValue.end())
 		{
 			value = (int64_t)_atoi64(it->second.data());
 		}
+		*/
 	}	
 
 	void MysqlConnector::r(const char* key, std::string& value)

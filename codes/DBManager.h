@@ -1,5 +1,12 @@
 #pragma once
+#ifdef ____WIN32_
 #include <concurrent_queue.h>
+using namespace Concurrency;
+#else
+#include <tbb/tbb.h>
+using namespace tbb;
+#endif
+
 #include "DBConnector.h"
 #include "DBBuffer.h"
 
@@ -15,7 +22,7 @@ namespace db
 		S_DBXML* __GameDBXML;//游戏数据库配置
 		S_DBXML* __AccountXML;//账号数据库配置
 
-		Concurrency::concurrent_queue<DBBuffer*> __logicBuffs;//安全的并发队列
+		concurrent_queue<DBBuffer*> __logicBuffs;//安全的并发队列
 		ThreadSafePool __poolBuffs;//buff回收内存池，主线程中用来回收的
 
 		std::vector<DBConnector*> DBRead;//玩家读取数据库操作

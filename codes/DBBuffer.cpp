@@ -1,5 +1,7 @@
 #include "DBBuffer.h"
 
+#include "memory.h"
+
 namespace db
 {
 
@@ -93,7 +95,7 @@ namespace db
 	{
 		if (m_SendE + len < m_CurLength)
 		{
-			memcpy_s(&m_Buf[m_SendE], len, v, len);
+			memcpy(&m_Buf[m_SendE], v, len);
 
 			m_SendE += len;
 		}
@@ -153,7 +155,7 @@ namespace db
 	void DBBuffer::r(void* v, const int len)
 	{
 		if(m_ReceE + len >= m_CurLength) return;
-		memcpy_s(v, len, &m_Buf[m_ReceE], len);
+		memcpy(v, &m_Buf[m_ReceE], len);
 		m_ReceE += len;
 	}
 

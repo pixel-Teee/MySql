@@ -72,7 +72,7 @@ namespace app
 
 	}
 
-	int app::run()
+	int run()
 	{
 		__DBManager = new DBManager();
 		__DBManager->InitDB();

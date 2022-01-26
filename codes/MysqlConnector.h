@@ -11,8 +11,11 @@
 #pragma comment(lib, "libmysql.lib")
 #else
 #include <stdio.h>
-#include <mysql.h>
+#include <cstring>
+#include <mysql/mysql.h>
 #endif
+
+
 
 namespace db
 {

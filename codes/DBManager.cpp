@@ -73,21 +73,35 @@ namespace db
 		//初始化xml
 		__GameDBXML = new S_DBXML();
 
+#ifdef ____WIN32_
 		sprintf(__GameDBXML->ip, "127.0.0.1");
 		sprintf(__GameDBXML->username, "root");
 		sprintf(__GameDBXML->userpass, "757602");
 		sprintf(__GameDBXML->dbname, "sakila");
 		__GameDBXML->port = 3306;
-
+#else
+		sprintf(__GameDBXML->ip, "192.168.1.102");
+		sprintf(__GameDBXML->username, "root");
+		sprintf(__GameDBXML->userpass, "757602");
+		sprintf(__GameDBXML->dbname, "myaccount");
+		__GameDBXML->port = 3306;
+#endif
 		//初始化账号数据库配置
 		__AccountXML = new S_DBXML();
 
+#ifdef ____WIN32_
 		sprintf(__AccountXML->ip, "127.0.0.1");
 		sprintf(__AccountXML->username, "root");
 		sprintf(__AccountXML->userpass, "757602");
 		sprintf(__AccountXML->dbname, "sakila");
 		__AccountXML->port = 3306;
-
+#else
+		sprintf(__AccountXML->ip, "192.168.1.102");
+		sprintf(__AccountXML->username, "root");
+		sprintf(__AccountXML->userpass, "757602");
+		sprintf(__AccountXML->dbname, "myaccount");
+		__AccountXML->port = 3306;
+#endif
 		/*生成新的可调用对象*/
 		auto readfun = std::bind(&DBManager::Thread_UserRead, this, std::placeholders::_1);
 

@@ -1,5 +1,11 @@
 #pragma once
+#ifdef ____WIN32_
 #include <concurrent_queue.h>
+using namespace Concurrency;
+#else
+#include <tbb/tbb.h>
+using namespace tbb;
+#endif
 #include "DBBuffer.h"
 #include <atomic>
 
@@ -11,7 +17,7 @@ using namespace db;
 class ThreadSafePool
 {
 private:
-	Concurrency::concurrent_queue<DBBuffer*> buffs;//安全的并发队列
+	concurrent_queue<DBBuffer*> buffs;//安全的并发队列
 	//buffer长度
 	int m_BufferSize;
 	//队列最大数量
