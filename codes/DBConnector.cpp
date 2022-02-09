@@ -1,5 +1,17 @@
 #include "DBConnector.h"
 
+#ifdef ____WIN32_
+HINSTANCE redisDll;
+#include "tchar.h"
+#endif
+
+void InitRedisDll()
+{
+#ifdef ____WIN32_
+	redisDll = LoadLibrary(_T("myredis.dll"));
+#endif
+}
+
 namespace db
 {
 	
@@ -21,7 +33,11 @@ namespace db
 		//0.实例化mysql连接器
 		mysql = new MysqlConnector();
 		//1.实例化redis连接器
-		 
+#ifdef ____WIN32_
+		redis = (RedisBase*)GetProcAddress(redisDll, "NewRedis")();
+#else
+		redis = NewRedis();
+#endif
 		//2.初始化数据
 		m_ThreadID = id;
 		m_CallBack = fun;
@@ -77,6 +93,25 @@ namespace db
 		printf("run thread...%d\n", m_ThreadID);
 		if(m_BeginBack != nullptr) m_BeginBack(nullptr);
 
+		//测试连接
+		int err = redis->Connect("127.0.0.1", 6379);
+		if(err == 0)
+		{
+			redis->RedisCommand("ping");
+
+			err = redis->RedisCommand("HMSET user_data:199 nick kkk level 10");
+
+			redis->RedisCommand("HMGET user_data:199 nick level");
+			if (err == 0)
+			{
+				int length = 0;
+				std::string nick = redis->value(0, length);
+				int level = atoi(redis->value(1, length));
+				redis->Clear();
+				printf("redis nick:%s level:%d\n", nick.c_str(), level);
+			}
+		}
+
 		while (true)
 		{
 			/*---上锁---，其它线程调用到这里，会阻塞*/
@@ -108,3 +143,4 @@ namespace db
 	}
 
 }
+

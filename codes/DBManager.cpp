@@ -1,6 +1,8 @@
 #include "DBManager.h"
 #include "AppLogin.h"
 
+extern void InitRedisDll();
+
 namespace db
 {
 	DBManager* __DBManager = nullptr;
@@ -67,6 +69,8 @@ namespace db
 	{
 		//加载mysql库
 		mysql_library_init(0, NULL, NULL);
+		//加载redis库
+		InitRedisDll();
 
 		//初始化回收池
 		__poolBuffs.Init(1000, 1024 * 32);
@@ -111,6 +115,7 @@ namespace db
 
 		auto begin_account = std::bind(&DBManager::Thread_BeginAccount, this);
 
+		int count = 1;
 		/*线程ID*/
 		int r_id = 1000;
 		int w_id = 2000;
@@ -119,7 +124,7 @@ namespace db
 		DBWrite.reserve(3);
 
 		//读工作线程
-		for (int i = 0; i < 3; ++i)
+		for (int i = 0; i < count; ++i)
 		{
 			auto d = new db::DBConnector(__GameDBXML);
 			DBRead.emplace_back(d);
@@ -128,7 +133,7 @@ namespace db
 		}
 
 		//写工作线程
-		for (int i = 0; i < 3; ++i)
+		for (int i = 0; i < count; ++i)
 		{
 			auto d = new db::DBConnector(__GameDBXML);
 			DBWrite.emplace_back(d);
@@ -177,3 +182,4 @@ namespace db
 		return buff;
 	}
 }
+

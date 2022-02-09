@@ -13,6 +13,8 @@
 
 #include <condition_variable>
 
+#include "RedisBase.h"
+
 namespace db
 {
 	typedef std::function<void(DBBuffer*)> Callback;
@@ -47,6 +49,7 @@ namespace db
 	private:
 		S_DBXML*		m_config;//连接数据库的配置文件
 		MysqlConnector* mysql;//mysql实例对象
+		RedisBase*		redis;//redis实例对象
 
 		//线程ID，当前属于哪个线程
 		int m_ThreadID;

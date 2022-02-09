@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dbserver", "dbserver\dbserver.vcxproj", "{FBC32A8E-FA90-4CE5-9D19-07CC62ABF7AB}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "myredis", "..\sss\myredis\myredis\myredis.vcxproj", "{FAD56954-DE59-4CD8-A029-6B7A5471F59C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{FBC32A8E-FA90-4CE5-9D19-07CC62ABF7AB}.Release|x64.Build.0 = Release|x64
 		{FBC32A8E-FA90-4CE5-9D19-07CC62ABF7AB}.Release|x86.ActiveCfg = Release|Win32
 		{FBC32A8E-FA90-4CE5-9D19-07CC62ABF7AB}.Release|x86.Build.0 = Release|Win32
+		{FAD56954-DE59-4CD8-A029-6B7A5471F59C}.Debug|x64.ActiveCfg = Debug|x64
+		{FAD56954-DE59-4CD8-A029-6B7A5471F59C}.Debug|x64.Build.0 = Debug|x64
+		{FAD56954-DE59-4CD8-A029-6B7A5471F59C}.Debug|x86.ActiveCfg = Debug|Win32
+		{FAD56954-DE59-4CD8-A029-6B7A5471F59C}.Debug|x86.Build.0 = Debug|Win32
+		{FAD56954-DE59-4CD8-A029-6B7A5471F59C}.Release|x64.ActiveCfg = Release|x64
+		{FAD56954-DE59-4CD8-A029-6B7A5471F59C}.Release|x64.Build.0 = Release|x64
+		{FAD56954-DE59-4CD8-A029-6B7A5471F59C}.Release|x86.ActiveCfg = Release|Win32
+		{FAD56954-DE59-4CD8-A029-6B7A5471F59C}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
