@@ -10,54 +10,54 @@
 
 namespace app
 {
-	db::MysqlConnector* mysqlconnect = NULL;
+	//db::MysqlConnector* mysqlconnect = NULL;
 
-	void initMysql()
-	{
-		//1.¼ÓÔØmysql¿â
-		mysql_library_init(0, NULL, NULL);
+	//void initMysql()
+	//{
+	//	//1.¼ÓÔØmysql¿â
+	//	mysql_library_init(0, NULL, NULL);
 
-		mysqlconnect = new db::MysqlConnector();
+	//	mysqlconnect = new db::MysqlConnector();
 
-		bool isconnect = mysqlconnect->ConnectMysql("127.0.0.1", "root", "757602", "sakila", 3306);
+	//	bool isconnect = mysqlconnect->ConnectMysql("127.0.0.1", "root", "757602", "sakila", 3306);
 
-		if (isconnect)
-		{
-			printf("mysql connect successfully...\n");
-		}
-		else
-		{
-			printf("mysql connect failed...\n");
-		}
+	//	if (isconnect)
+	//	{
+	//		printf("mysql connect successfully...\n");
+	//	}
+	//	else
+	//	{
+	//		printf("mysql connect failed...\n");
+	//	}
 
-		std::stringstream sql;
+	//	std::stringstream sql;
 
-		sql << "select * from sakila.actor;";
+	//	sql << "select * from sakila.actor;";
 
-		int error = mysqlconnect->ExecQuery(sql.str());
+	//	int error = mysqlconnect->ExecQuery(sql.str());
 
-		if (error != 0)
-		{
-			printf("mysql query err...%d\n", error);
-			return;
-		}
+	//	if (error != 0)
+	//	{
+	//		printf("mysql query err...%d\n", error);
+	//		return;
+	//	}
 
-		int row = mysqlconnect->GetQueryRowNum();
-		for (int i = 0; i < row; ++i)
-		{
-			
-			printf("mysql row...%d\n", i);
+	//	int row = mysqlconnect->GetQueryRowNum();
+	//	for (int i = 0; i < row; ++i)
+	//	{
+	//		
+	//		printf("mysql row...%d\n", i);
 
-			int id = 0;
-			std::string first_name;
-			mysqlconnect->r("id", id);
-			mysqlconnect->r("first_name", first_name);
-			
-			mysqlconnect->QueryNext();
-			printf("mysql data->%d->%s", id, first_name.c_str());
-		}
-		
-	}
+	//		int id = 0;
+	//		std::string first_name;
+	//		mysqlconnect->r("id", id);
+	//		mysqlconnect->r("first_name", first_name);
+	//		
+	//		mysqlconnect->QueryNext();
+	//		printf("mysql data->%d->%s", id, first_name.c_str());
+	//	}
+	//	
+	//}
 	/*-------------------------------------------------*/
 	/*-------------------------------------------------*/
 	/*-------------------------------------------------*/
@@ -78,9 +78,9 @@ namespace app
 		__DBManager->InitDB();
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-		app::onLogin_1000();
+		/*app::onLogin_1000();
 		app::onRegister_2000();
-		app::on_3000();
+		app::on_3000();*/
 		while (true)
 		{
 			update();

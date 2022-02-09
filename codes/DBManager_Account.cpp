@@ -4,6 +4,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <chrono>
 #include "UserData.h"
 
 namespace db
@@ -12,6 +13,8 @@ namespace db
 	//初始化读取
 	void DBManager::Thread_BeginAccount()
 	{
+		auto start = std::chrono::steady_clock::now();
+
 		auto mysql = DBAccount->GetMysqlConnector();
 		stringstream sql;
 		sql << "select * from user_account;";
@@ -43,8 +46,12 @@ namespace db
 			app::__AccountsID.insert(std::make_pair(mem->ID, mem));
 			mysql->QueryNext();
 
-			printf("%d-%d %s-%s %d-%d\n", mem->ID, mem->state, mem->name, mem->password, mem->timeCreate, mem->timeLastLogin);
+			//printf("%d-%d %s-%s %d-%d\n", mem->ID, mem->state, mem->name, mem->password, mem->timeCreate, mem->timeLastLogin);
 		}
+
+		auto current = std::chrono::steady_clock::now();
+		auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(current - start);
+		printf("user_account size=%d time:%d 毫秒\n", (int)app::__AccountsID.size(), (int)duration.count());
 	}
 
 	//更新登录时间

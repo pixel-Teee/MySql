@@ -158,7 +158,7 @@ namespace db
 			if(buff == nullptr)break;
 			
 			//调用给逻辑单元
-			app::OnDBCommand(buff);
+			//app::OnDBCommand(buff);
 
 			//使用完毕，加入回收池
 			__poolBuffs.Push(buff);

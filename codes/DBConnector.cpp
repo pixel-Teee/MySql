@@ -47,16 +47,14 @@ namespace db
 
 		//3.连接mysql
 		bool isok = mysql->ConnectMysql(m_config->ip, m_config->username, m_config->userpass, m_config->dbname,  m_config->port);
-		if (isok)
-		{
-			printf("mysql connect successfully...\n");
-		}
-		else
-		{
-			printf("mysql connect failed...\n");
-		}
 
-		//4.开启线程
+		//4.连接redis
+		int err = redis->Connect("127.0.0.1", 6379);
+
+		//isok:0表示成功，1表示失败
+		printf("mysql connect...%d /// redis connect...%d tid-%d\n", !isok, err, m_ThreadID);
+
+		//5.开启线程
 		std::thread th(&DBConnector::Run, this);
 		th.detach();
 
@@ -92,25 +90,6 @@ namespace db
 	{
 		printf("run thread...%d\n", m_ThreadID);
 		if(m_BeginBack != nullptr) m_BeginBack(nullptr);
-
-		//测试连接
-		int err = redis->Connect("127.0.0.1", 6379);
-		if(err == 0)
-		{
-			redis->RedisCommand("ping");
-
-			err = redis->RedisCommand("HMSET user_data:199 nick kkk level 10");
-
-			redis->RedisCommand("HMGET user_data:199 nick level");
-			if (err == 0)
-			{
-				int length = 0;
-				std::string nick = redis->value(0, length);
-				int level = atoi(redis->value(1, length));
-				redis->Clear();
-				printf("redis nick:%s level:%d\n", nick.c_str(), level);
-			}
-		}
 
 		while (true)
 		{
