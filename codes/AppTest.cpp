@@ -71,6 +71,18 @@ namespace app
 
 		printf("expire...type:%d %d\n", reply->type, (int)reply->integer);
 
+		//7、设置列表
+		sss = "lpush kkk 100";
+		redis->RedisCommand(sss.c_str());
+		reply = (redisReply*)redis->getReply();
+
+		printf("list...type:%d %d\n", reply->type, (int)reply->integer);
+
+		sss = "lrange kkk 0 -1";
+		redis->RedisCommand(sss.c_str());
+		reply = (redisReply*)redis->getReply();
+
+		printf("list...type:%d %d\n", reply->type, (int)reply->elements);
 		//总结
 		//一、hash
 		//hmset REDIS_REPLY_STATUS reply->str("OK")
@@ -83,6 +95,9 @@ namespace app
 		//set REDIS_REPLY_STATUS reply->str("OK")
 		//get REDIS_REPLY_STRING reply->str /不存在REDIS_REPLY_NIL
 
+		//三、list
+		//lpush REDIS_REPLY_INTEGER reply->integer(设置List长度)
+		//lrange REDIS_REPLY_INTEGER reply->elements(数组个数) reply->element(数组)
 	}
 
 	void testData()
