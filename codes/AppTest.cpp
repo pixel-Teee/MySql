@@ -83,6 +83,64 @@ namespace app
 		reply = (redisReply*)redis->getReply();
 
 		printf("list...type:%d %d\n", reply->type, (int)reply->elements);
+
+		//8、集合set
+		//Set是String类型的无序集合，集合成员是唯一的，这就意味着集合不能出现重复的数据
+		//集合是通过哈希表实现的，所以添加、删除、查找的复杂度都是O(1)
+		sss = "sadd key:xxxx 100";
+		redis->RedisCommand(sss.c_str());
+		reply = (redisReply*)redis->getReply();
+
+		printf("sadd...type:%d %d\n", reply->type, (int)reply->integer);
+
+		sss = "SMEMBERS key:xxxx";
+		redis->RedisCommand(sss.c_str());
+		reply = (redisReply*)redis->getReply();
+
+		printf("SMEMBERS...type:%d %d\n", reply->type, (int)reply->elements);
+
+		//11、有序集合
+		//有序集合和集合一样也是string类型元素的集合，且不允许重复的成员
+		// 不同的是每个元素都会关联一个double类型的分数，redis通过分数为集合中的元素从小到大排序
+		// 有序集合成员是唯一的，但是分数可以重复
+		// 集合是通过哈希表实现的，所以添加、删除、查找的复杂的都是O(1)
+		sss = "zadd key:zzzz 100 kkksssal";
+		redis->RedisCommand(sss.c_str());
+		reply = (redisReply*)redis->getReply();
+
+		printf("zadd...type:%d %d\n", reply->type, (int)reply->integer);
+
+		sss = "ZRANGE key:zzzz 0 -1 WITHSCORES";
+		redis->RedisCommand(sss.c_str());
+		reply = (redisReply*)redis->getReply();
+
+		printf("ZRANGE...type:%d %d\n", reply->type, (int)reply->elements);
+
+		//12、事务
+		//单个redis命令的执行是原子性的，但Redis没有在事务上增加任何维持原子的机制，
+		//所以Redis事务的执行并不是原子的
+		//事务可以理解为一个打包的批量执行脚本，但批量指令并非是原子化的操作
+		//中间某条指令的失败不会导致前面已做的指令回滚，也不会造成后续的指令不做
+		sss = "MULTI";
+		redis->RedisCommand(sss.c_str());
+		reply = (redisReply*)redis->getReply();
+		printf("MULTI...type:%d %s\n", reply->type, reply->str);
+
+		sss = "set a1 111";
+		redis->RedisCommand(sss.c_str());
+		reply = (redisReply*)redis->getReply();
+		printf("set...type:%d %s\n", reply->type, reply->str);
+
+		sss = "get a2";
+		redis->RedisCommand(sss.c_str());
+		reply = (redisReply*)redis->getReply();
+		printf("get...type:%d %s\n", reply->type, reply->str);
+
+		sss = "EXEC";
+		redis->RedisCommand(sss.c_str());
+		reply = (redisReply*)redis->getReply();
+		printf("EXEC...type:%d %d\n", reply->type, (int)reply->elements);
+
 		//总结
 		//一、hash
 		//hmset REDIS_REPLY_STATUS reply->str("OK")
@@ -98,6 +156,18 @@ namespace app
 		//三、list
 		//lpush REDIS_REPLY_INTEGER reply->integer(设置List长度)
 		//lrange REDIS_REPLY_INTEGER reply->elements(数组个数) reply->element(数组)
+
+		//四、集合(set)
+		//sadd REDIS_REPLY_INTEGER reply->integer(1设置成功 0设置失败)
+		//SMEMBERS REDIS_REPLY_ARRAY reply->elements(数组个数) reply->element(数组)
+
+		//五、有序集合(sorted set)
+		//zadd REDIS_REPLY_INTEGER reply->integer(1设置成功 0设置失败)
+		//ZRANGE REDIS ARRAY reply->elements(数组个数) reply->element(数组)
+
+		//事务
+		//MULTI 开始事务 REDIS_REPLY_STATUS reply->str("OK")
+		//EXEC 执行事务 REDIS_REPLY_ARRAY reply->elements(数组个数) reply->element(数组)
 	}
 
 	void testData()
