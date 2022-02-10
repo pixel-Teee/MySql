@@ -70,6 +70,7 @@ namespace db
 		DBBuffer* PopBuffer();
 		
 		inline MysqlConnector* GetMysqlConnector(){ return mysql; }
+		inline RedisBase* GetRedisConnector(){ return redis; }
 		inline int GetThreadID(){ return m_ThreadID; }
 		inline int GetWorkCount()const { return m_WorkCount;}
 

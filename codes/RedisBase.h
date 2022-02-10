@@ -11,6 +11,8 @@ public:
 	virtual int RedisCommand(const char* cmd) = 0;
 	virtual void Clear() = 0;
 	virtual char* value(int index, int& length) = 0;
+
+	virtual void* getReply() = 0;
 };
 
 #ifdef ____WIN32_

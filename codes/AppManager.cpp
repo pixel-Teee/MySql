@@ -2,6 +2,7 @@
 
 #include "DBManager.h"
 #include "AppLogin.h"
+#include "AppTest.h"
 
 #include <iostream>
 #include <fstream>
@@ -81,6 +82,7 @@ namespace app
 		/*app::onLogin_1000();
 		app::onRegister_2000();
 		app::on_3000();*/
+		app::testData();
 		while (true)
 		{
 			update();
