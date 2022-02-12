@@ -5,6 +5,12 @@
 #define CMD_1000 1000
 #define CMD_2000 2000
 #define CMD_3000 3000
+#define CMD_4000 4000
+#define CMD_5000 5000
+#define CMD_6000 6000
+#define CMD_7000 7000
+#define CMD_8000 8000
+#define CMD_9000 9000
 
 #ifdef ____WIN32_
 #define REDIS_REPLY_STRING 1
@@ -48,6 +54,7 @@ namespace app
 	{
 		int ID;//账号唯一标记
 		int8_t state;
+		int8_t redis_state;
 		char name[USER_MAX_MEMBER];
 		char password[USER_MAX_MEMBER];
 		int  timeCreate;//账号创建时间

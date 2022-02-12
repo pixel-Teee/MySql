@@ -5,6 +5,70 @@
 
 namespace app
 {
+	//获取玩家数据
+	void test_GetUserData(int memid)
+	{
+		auto account = app::FindMember(memid);
+		
+		if (account == nullptr)
+		{
+			printf("user err_online..%d %d\n", memid, __LINE__);
+			return;
+		}
+
+		auto user = FindUser(memid);
+		if (user != NULL)
+		{
+			printf("user err_online..%d %d\n", memid, __LINE__);
+			return;
+		}
+
+		auto db = __DBManager->GetDBSource(ETT_USERREAD);
+		auto buff = db->PopBuffer();
+
+		buff->b(CMD_3000);
+		buff->s(memid);
+		buff->s((int)account->redis_state);
+		buff->e();
+		db->PushToWorkThread(buff);
+	}
+
+	//1、测试登录
+	void test_Login(std::string account, std::string password)
+	{
+		//1.从自定义内存红黑树里面查找
+		//找账号
+		auto mem = FindMember(account);
+		if (mem == nullptr)
+		{
+			printf("testLogin mem == nulptr...%d\n", __LINE__);
+			return;
+		}
+
+		//找密码
+		int err = strcmp(password.c_str(), mem->password);
+		if (err != 0)
+		{
+			printf("testLogin password err...%d\n", __LINE__);
+			return;
+		}
+
+		mem->timeLastLogin = time(NULL);
+		printf("testLogin successfully...%d\n", __LINE__);
+
+		//从主线程推送数据到工作线程
+		auto db = __DBManager->DBAccount;
+		auto buff = db->PopBuffer();
+		buff->b(CMD_1000);//表示更新
+		buff->s(mem->ID);//ID
+		buff->e();
+		//从主线程推送到工作线程
+		db->PushToWorkThread(buff);
+
+		//获取登录数据
+		test_GetUserData(mem->ID);
+	}
+
 	//测试5种数据类型
 	void testRedis()
 	{
@@ -172,7 +236,8 @@ namespace app
 
 	void testData()
 	{
-		testRedis();
+		test_Login("gfp", "gfp001");
+		//testRedis();
 	}
 
 }
