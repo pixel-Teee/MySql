@@ -301,13 +301,18 @@ namespace app
 		user->rot_y = 222;
 		user->rot_z = 333;
 
-		auto db = __DBManager->GetDBSource(ETT_USERWRITE);
+		auto db = __DBManager->GetDBSource(ETT_USERWRITE, user->Temp_SaveThreadID);
 		auto buff = db->PopBuffer();
 		buff->b(CMD_7000);
 		buff->s(kind);
 		buff->s(user, sizeof(S_USER_BASE));
 		buff->e();
 		db->PushToWorkThread(buff);
+
+		printf("test_SaveUserData... [%d-%d] %d\n", user->Temp_SaveThreadID, user->Temp_SaveCount, __LINE__);
+
+		//更新保存线程ID
+		user->addThreadID(db->GetThreadID());
 	}
 
 }

@@ -29,7 +29,7 @@ namespace db
 		std::vector<DBConnector*> DBWrite;//玩家写数据库操作
 		DBConnector* DBAccount;//玩家账号全局数据库操作
 
-		DBConnector* GetDBSource(int type);
+		DBConnector* GetDBSource(int type, int tid = 0);
 		DBBuffer* PopPool();
 
 		void InitDB();

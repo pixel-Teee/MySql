@@ -201,6 +201,16 @@ namespace app
 			if(mem != NULL) mem->redis_state = ERS_FREE;
 		}
 
+		//设置下正在保存的ID
+		auto user = FindUser(memid);
+		if (user != NULL)
+		{
+			printf("db_7000 save successfully... %d [%d %d] %d\n",
+			kind, user->Temp_SaveThreadID, user->Temp_SaveCount, __LINE__);
+			user->clearThreadID();
+			printf("db_7000 clear successfully..%d [%d %d] %d\n", kind, user->Temp_SaveThreadID, user->Temp_SaveCount, __LINE__);
+		}
+
 		if(kind == ESE_TIMESAVE) return;
 		//离线删除
 		auto it = __OnlineUsersID.find(memid);

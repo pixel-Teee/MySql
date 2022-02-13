@@ -21,7 +21,7 @@ namespace db
 	}
 
 	//获取工作线程工作量最小的线程实例
-	DBConnector* DBManager::GetDBSource(int type)
+	DBConnector* DBManager::GetDBSource(int type, int tid)
 	{
 		if (type == ETT_USERREAD)
 		{
@@ -40,6 +40,16 @@ namespace db
 				}
 			}
 			return db;
+		}
+
+		if (tid > 0)
+		{
+			auto it = DBWrite.begin();
+			for (; it != DBWrite.end(); ++it)
+			{
+				db::DBConnector* pdb = *it;
+				if(pdb->GetThreadID() == tid) return pdb;
+			}
 		}
 
 		if (type == ETT_USERWRITE)
