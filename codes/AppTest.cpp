@@ -33,6 +33,25 @@ namespace app
 		db->PushToWorkThread(buff);
 	}
 
+	//3、访问其它玩家数据
+	void test_OtherUserData(int memid)
+	{
+		auto user = FindUser(memid);
+		if (user != NULL)
+		{
+			printf("user online...直接获取数据%d %d\n", memid, __LINE__);
+			return;
+		}
+
+		auto db = __DBManager->GetDBSource(ETT_USERREAD);
+		auto buff = db->PopBuffer();
+		buff->b(CMD_6000);
+		buff->s(memid);
+		buff->e();
+		db->PushToWorkThread(buff);
+	}
+
+
 	//1、测试登录
 	void test_Login(std::string account, std::string password)
 	{
@@ -238,6 +257,7 @@ namespace app
 	{
 		test_Login("gfp", "gfp001");
 		//testRedis();
+		test_OtherUserData(102);
 	}
 
 }

@@ -147,6 +147,37 @@ namespace app
 		printf("db_3000 successfully..%d-%d-%d %s %d\n", user->memid, user->curhp, user->maxhp, user->nick, __LINE__);
 	}
 
+	void db_4000(DBBuffer* buff)
+	{
+		int errcmd = 0;
+		buff->r(errcmd);
+		if (errcmd != 0)
+		{
+			printf("db_4000 failed...%d %d\n", errcmd, __LINE__);
+			return;
+		}
+		printf("db_4000 successfully...%d %d\n", errcmd, __LINE__);
+	}
+
+	void db_6000(DBBuffer* buff)
+	{
+		int errcmd = 0;
+		buff->r(errcmd);
+
+		if (errcmd != 0)
+		{
+			printf("db_6000 failed...%d %d\n", errcmd, __LINE__);
+			return;
+		}
+
+		//读取玩家数据
+		app::S_USER_BASE* user = new app::S_USER_BASE();
+		buff->r(user, sizeof(app::S_USER_BASE));
+
+		printf("db_6000 successfully...%d-%d-%d %s %d\n", user->memid, user->curhp, user->maxhp, user->nick, __LINE__);
+
+	}
+
 	//-----------------------------------------------------
 	//工作线程返回到主线程当中的数据
 	void OnDBCommand(void* buf)
@@ -168,6 +199,12 @@ namespace app
 			case CMD_3000:
 				db_3000(buff);
 				break;;
+			case CMD_4000:
+				db_4000(buff);
+				break;
+			case CMD_6000:
+				db_6000(buff);
+				break;
 		}
 	}
 }
