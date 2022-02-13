@@ -5,6 +5,31 @@
 
 namespace app
 {
+	//更新用户数据 保存 5分钟保存一次
+	void updateUserData()
+	{
+		auto it = __OnlineUsersID.begin();
+		while (it != __OnlineUsersID.end())
+		{
+			auto user = it->second;
+			if (user == NULL)
+			{
+				++it;
+				continue;
+			}
+			int value = time(NULL) - user->Temp_SaveTime;
+			//暂时10秒一次
+			if (value >= 10)
+			{
+				user->Temp_SaveTime = time(NULL);
+
+				printf("trigger usersave...%d\n", user->memid);
+				test_SaveUserData(user->memid, ESE_TIMESAVE);
+			}
+			++it;
+		}
+	}
+
 	//获取玩家数据
 	void test_GetUserData(int memid)
 	{
@@ -258,6 +283,31 @@ namespace app
 		test_Login("gfp", "gfp001");
 		//testRedis();
 		test_OtherUserData(102);
+	}
+	
+	//账号ID，类型，游戏中的保存，离开游戏的保存
+	void test_SaveUserData(int memid, int kind)
+	{
+		auto user = FindUser(memid);
+		if (user == NULL)
+		{
+			printf("test_SaveUserData 没有找到玩家数据%d %d\n", memid, __LINE__);
+			return;
+		}
+		user->pos_x = 100;
+		user->pos_y = 200;
+		user->pos_z = 300;
+		user->rot_x = 111;
+		user->rot_y = 222;
+		user->rot_z = 333;
+
+		auto db = __DBManager->GetDBSource(ETT_USERWRITE);
+		auto buff = db->PopBuffer();
+		buff->b(CMD_7000);
+		buff->s(kind);
+		buff->s(user, sizeof(S_USER_BASE));
+		buff->e();
+		db->PushToWorkThread(buff);
 	}
 
 }

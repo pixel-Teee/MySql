@@ -66,6 +66,7 @@ namespace app
 	{
 		if(__DBManager == NULL) return;
 		__DBManager->update();
+		app::updateUserData();
 	}
 
 	void Init()

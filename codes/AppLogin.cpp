@@ -178,6 +178,43 @@ namespace app
 
 	}
 
+	//保存数据
+	void db_7000(DBBuffer* buff)
+	{
+		int errcmd = 0;
+		int kind = 0;
+		int memid = 0;
+		buff->r(errcmd);
+		buff->r(kind);
+		buff->r(memid);
+		auto mem = FindMember(memid);
+
+		//写入数据失败
+		if (errcmd != 0)
+		{
+			//if(errcmd == 1)写日志到本地文件记录一下
+			printf("db_7000 failed..%d %d\n", errcmd, __LINE__);
+			if(mem != NULL) mem->redis_state = ERS_FAILED;
+		}
+		else
+		{
+			if(mem != NULL) mem->redis_state = ERS_FREE;
+		}
+
+		if(kind == ESE_TIMESAVE) return;
+		//离线删除
+		auto it = __OnlineUsersID.find(memid);
+		if(it != __OnlineUsersID.end())
+		{
+			auto user = it->second;
+			if (user != nullptr)
+			{
+				delete user;
+			}
+			__OnlineUsersID.erase(it);
+		}
+	}
+
 	//-----------------------------------------------------
 	//工作线程返回到主线程当中的数据
 	void OnDBCommand(void* buf)
@@ -204,6 +241,9 @@ namespace app
 				break;
 			case CMD_6000:
 				db_6000(buff);
+				break;
+			case CMD_7000:
+				db_7000(buff);
 				break;
 		}
 	}
